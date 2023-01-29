@@ -1,0 +1,3 @@
+[submodule "blog-hexo-content"]
+	path = blog-hexo-content
+	url = git@github.com:meixg/blog-hexo-content.git
