@@ -18,6 +18,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: true
+      - name: ls
+        run: ls -all
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
