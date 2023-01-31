@@ -56,4 +56,4 @@ jobs:
           accountId: 39a9a20457ce819632c53674af433303
           projectName: meixg-blog-notion
           directory: public
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
