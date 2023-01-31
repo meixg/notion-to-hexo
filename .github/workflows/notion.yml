@@ -27,6 +27,7 @@ jobs:
       - name: npm install, build
         run: |
           cd blog-hexo-content
+          git pull
           npm ci
           node local-scripts/index.js
           ls -all -R output
