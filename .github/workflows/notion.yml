@@ -27,7 +27,7 @@ jobs:
       - name: npm install, build
         run: |
           cd blog-hexo-content
-          git config pull.ff only
+          git config pull.rebase false
           git pull
           npm ci
           node local-scripts/index.js
