@@ -1,0 +1,60 @@
+name: Notion to Markdown
+
+on:
+  # schedule:
+  #   - cron: '*/20 * * * *'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+          submodules: true
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install, build
+        run: |
+          cd blog-hexo-content
+          npm ci
+          node local-scripts/index.js
+          ls -all -R output
+          rm -rf source/_posts/*
+          mv output/* source/_posts
+          npm run build
+        env:
+          CI: true
+      - name: Update algolia
+        run: |
+          cd blog-hexo-content
+          npm run algolia
+        env:
+          HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.HEXO_ALGOLIA_INDEXING_KEY }}
+      - name: Update leancloud
+        run: |
+          cd blog-hexo-content
+          npx hexo d || echo ""
+      - name: Commit
+        run: |
+          cd blog-hexo-content
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add . && git commit -m "update" || echo ""
+          git push origin main
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 39a9a20457ce819632c53674af433303
+          projectName: meixg-blog-notion
+          directory: cd blog-hexo-content/public
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
