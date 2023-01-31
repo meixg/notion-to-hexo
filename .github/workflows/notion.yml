@@ -16,6 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          repository: meixg/blog-hexo-content
           token: ${{ secrets.ACCESS_TOKEN }}
           submodules: true
       - name: ls
@@ -26,9 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install, build
         run: |
-          cd blog-hexo-content
-          git config pull.rebase false
-          git pull
           npm ci
           node local-scripts/index.js
           ls -all -R output
@@ -39,17 +37,14 @@ jobs:
           CI: true
       - name: Update algolia
         run: |
-          cd blog-hexo-content
           npm run algolia
         env:
           HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.HEXO_ALGOLIA_INDEXING_KEY }}
       - name: Update leancloud
         run: |
-          cd blog-hexo-content
           npx hexo d || echo ""
       - name: Commit
         run: |
-          cd blog-hexo-content
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add . && git commit -m "update" || echo ""
@@ -60,5 +55,5 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 39a9a20457ce819632c53674af433303
           projectName: meixg-blog-notion
-          directory: cd blog-hexo-content/public
+          directory: public
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
