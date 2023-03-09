@@ -50,7 +50,7 @@ jobs:
           git add . && git commit -m "update" || echo ""
           git push origin main
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@1
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 39a9a20457ce819632c53674af433303
