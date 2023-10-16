@@ -38,7 +38,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code || echo "There are changes"
+          git diff --exit-code
           if [ $? -eq 1 ]; then
               echo "has_changes=true" >> $GITHUB_ENV
           else
