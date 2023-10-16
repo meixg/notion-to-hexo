@@ -38,11 +38,11 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          git diff --exit-code
-          if [ $? -eq 1 ]; then
-              echo "has_changes=true" >> $GITHUB_ENV
-          else
+          changes=$(git diff)
+          if [ -z "$changes" ]; then
               echo "has_changes=false" >> $GITHUB_ENV
+          else
+              echo "has_changes=true" >> $GITHUB_ENV
           fi
       - name: Update algolia
         if: env.has_changes == 'true'
