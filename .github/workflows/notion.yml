@@ -38,7 +38,7 @@ jobs:
       - name: Check for changes
         id: git-check
         run: |
-          changes=$(git diff)
+          changes=$(git status --porcelain)
           echo $changes
           if [ -z "$changes" ]; then
               echo "has_changes=false" >> $GITHUB_ENV
