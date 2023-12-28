@@ -55,6 +55,8 @@ jobs:
         if: env.has_changes == 'true'
         run: |
           npx hexo d || echo ""
+      - name: Create zip archive
+        run: zip -r release.zip public
       - name: Commit
         if: env.has_changes == 'true'
         run: |
@@ -72,8 +74,6 @@ jobs:
           directory: public
           # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create zip archive
-        run: zip -r release.zip public
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
