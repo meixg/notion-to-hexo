@@ -45,12 +45,12 @@ jobs:
           else
               echo "has_changes=true" >> $GITHUB_ENV
           fi
-      - name: Update algolia
-        if: env.has_changes == 'true'
-        run: |
-          npm run algolia
-        env:
-          HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.HEXO_ALGOLIA_INDEXING_KEY }}
+      # - name: Update algolia
+      #   if: env.has_changes == 'true'
+      #   run: |
+      #     npm run algolia
+      #   env:
+      #     HEXO_ALGOLIA_INDEXING_KEY: ${{ secrets.HEXO_ALGOLIA_INDEXING_KEY }}
       - name: Update leancloud
         if: env.has_changes == 'true'
         run: |
