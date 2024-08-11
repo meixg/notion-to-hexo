@@ -84,6 +84,16 @@ jobs:
       #     release_name: Release ${{ github.ref }}
       #     draft: false
       #     prerelease: false
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.TENCENT_HOST }}
+          username: ${{ secrets.TENCENT_USERNAME }}
+          # port: ${{ secrets.PORT }}
+          key: ${{ secrets.TENCENT_VPS_KEY }}
+          source: "public"
+          target: "/home/lighthouse/blog"
+          overwrite: true
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
