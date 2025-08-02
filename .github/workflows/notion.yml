@@ -64,14 +64,14 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add . && git commit -m "update" || echo ""
           git push origin main
-      - name: Publish to Cloudflare Pages
-        if: env.has_changes == 'true'
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: 39a9a20457ce819632c53674af433303
-          projectName: meixg-blog-notion
-          directory: public
+      # - name: Publish to Cloudflare Pages
+      #   if: env.has_changes == 'true'
+      #   uses: cloudflare/pages-action@v1
+      #   with:
+      #     apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      #     accountId: 39a9a20457ce819632c53674af433303
+      #     projectName: meixg-blog-notion
+      #     directory: public
           # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Create Release
@@ -84,16 +84,16 @@ jobs:
       #     release_name: Release ${{ github.ref }}
       #     draft: false
       #     prerelease: false
-      - name: copy file via ssh key
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.TENCENT_HOST }}
-          username: ${{ secrets.TENCENT_USERNAME }}
-          # port: ${{ secrets.PORT }}
-          key: ${{ secrets.TENCENT_VPS_KEY }}
-          source: "public"
-          target: "/home/lighthouse/blog"
-          overwrite: true
+      # - name: copy file via ssh key
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.TENCENT_HOST }}
+      #     username: ${{ secrets.TENCENT_USERNAME }}
+      #     # port: ${{ secrets.PORT }}
+      #     key: ${{ secrets.TENCENT_VPS_KEY }}
+      #     source: "public"
+      #     target: "/home/lighthouse/blog"
+      #     overwrite: true
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
